@@ -1,0 +1,544 @@
+CREATE TABLE Member (
+  2      CustomerID INT PRIMARY KEY,
+  3      FirstName VARCHAR(50),
+  4      LastName VARCHAR(50),
+  5      Email VARCHAR(100),
+  6      Phone VARCHAR(15)
+  7  );
+
+Table created.
+
+SQL> INSERT ALL
+  2  INTO member VALUES (22, 'Olivia', 'Taylor', 'olivia.t@email.com', '111-222-3334')
+  3  INTO member VALUES (23, 'Daniel', 'Wilson', 'daniel.w@email.com', '444-555-6667')
+  4  INTO member VALUES (24, 'Sophie', 'Brown', 'sophie.b@email.com', '777-888-9998')
+  5  INTO member VALUES (25, 'Matthew', 'Martinez', 'matthew.m@email.com', '333-666-9997')
+  6  INTO member VALUES (26, 'Grace', 'Jones', 'grace.j@email.com', '111-555-9998')
+  7  INTO member VALUES (27, 'Logan', 'Hill', 'logan.h@email.com', '222-333-4445')
+  8  INTO member VALUES (28, 'Ava', 'Morgan', 'ava.m@email.com', '888-777-6667')
+  9  INTO member VALUES (29, 'William', 'Harrison', 'william.h@email.com', '999-888-7779')
+ 10  INTO member VALUES (30, 'Zoe', 'Baker', 'zoe.b@email.com', '555-444-3335')
+ 11  INTO member VALUES (31, 'Ethan', 'Fisher', 'ethan.f@email.com', '666-444-2223')
+ 12  SELECT * FROM dual;
+
+10 rows created.
+
+SQL> CREATE TABLE Books (
+  2      BookID INT PRIMARY KEY,
+  3      Title VARCHAR(100),
+  4      Author VARCHAR(100),
+  5      AvailableCopies INT
+  6  );
+
+Table created.
+
+SQL> INSERT ALL
+  2  INTO Books VALUES (101, 'The Great Gatsby', 'F. Scott Fitzgerald', 3)
+  3  INTO Books VALUES (102, 'To Kill a Mockingbird', 'Harper Lee', 2)
+  4  INTO Books VALUES (103, '1984', 'George Orwell', 5)
+  5  INTO Books VALUES (104, 'Pride and Prejudice', 'Jane Austen', 4)
+  6  INTO Books VALUES (105, 'The Catcher in the Rye', 'J.D. Salinger', 3)
+  7  INTO Books VALUES (106, 'The Hobbit', 'J.R.R. Tolkien', 2)
+  8  INTO Books VALUES (107, 'The Lord of the Rings', 'J.R.R. Tolkien', 1)
+  9  INTO Books VALUES (108, 'The Da Vinci Code', 'Dan Brown', 4)
+ 10  INTO Books VALUES (109, 'Harry Potter and the Sorcerer''s Stone', 'J.K. Rowling', 3)
+ 11  INTO Books VALUES (110, 'The Shining', 'Stephen King', 4)
+ 12  SELECT * FROM dual;
+
+10 rows created.
+
+SQL> CREATE TABLE Borrowings (
+  2      BorrowingID INT PRIMARY KEY,
+  3      CustomerID INT,
+  4      BookID INT,
+  5      BorrowDate DATE,
+  6      ReturnDate DATE,
+  7      FOREIGN KEY (CustomerID) REFERENCES Member(CustomerID),
+  8      FOREIGN KEY (BookID) REFERENCES Books(BookID)
+  9  );
+
+Table created.
+
+SQL> INSERT ALL
+  2  INTO Borrowings VALUES (3, 22, 101, TO_DATE('2024-01-12', 'YYYY-MM-DD'), TO_DATE('2024-01-25', 'YYYY-MM-DD'))
+  3  INTO Borrowings VALUES (4, 23, 102, TO_DATE('2024-01-15', 'YYYY-MM-DD'), TO_DATE('2024-01-28', 'YYYY-MM-DD'))
+  4  INTO Borrowings VALUES (5, 24, 103, TO_DATE('2024-01-20', 'YYYY-MM-DD'), NULL) -- Not returned yet
+  5  INTO Borrowings VALUES (6, 25, 104, TO_DATE('2024-01-22', 'YYYY-MM-DD'), NULL) -- Not returned yet
+  6  INTO Borrowings VALUES (7, 26, 105, TO_DATE('2024-01-25', 'YYYY-MM-DD'), NULL) -- Not returned yet
+  7  INTO Borrowings VALUES (8, 27, 106, TO_DATE('2024-01-28', 'YYYY-MM-DD'), NULL) -- Not returned yet
+  8  INTO Borrowings VALUES (9, 28, 107, TO_DATE('2024-01-30', 'YYYY-MM-DD'), NULL) -- Not returned yet
+  9  INTO Borrowings VALUES (10, 29, 108, TO_DATE('2024-02-02', 'YYYY-MM-DD'), NULL) -- Not returned yet
+ 10  INTO Borrowings VALUES (11, 30, 109, TO_DATE('2024-02-05', 'YYYY-MM-DD'), NULL) -- Not returned yet
+ 11  INTO Borrowings VALUES (12, 31, 110, TO_DATE('2024-02-08', 'YYYY-MM-DD'), NULL) -- Not returned yet
+ 12  SELECT * FROM dual;
+
+10 rows created.
+
+SQL> select* from Borrowings;
+
+BORROWINGID CUSTOMERID     BOOKID BORROWDAT RETURNDAT
+----------- ---------- ---------- --------- ---------
+          3         22        101 12-JAN-24 25-JAN-24
+          4         23        102 15-JAN-24 28-JAN-24
+          5         24        103 20-JAN-24
+          6         25        104 22-JAN-24
+          7         26        105 25-JAN-24
+          8         27        106 28-JAN-24
+          9         28        107 30-JAN-24
+         10         29        108 02-FEB-24
+         11         30        109 05-FEB-24
+         12         31        110 08-FEB-24
+
+10 rows selected.
+
+SQL> select* from Books;
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       101
+The Great Gatsby
+F. Scott Fitzgerald
+              3
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       102
+To Kill a Mockingbird
+Harper Lee
+              2
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       103
+1984
+George Orwell
+              5
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       104
+Pride and Prejudice
+Jane Austen
+              4
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       105
+The Catcher in the Rye
+J.D. Salinger
+              3
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       106
+The Hobbit
+J.R.R. Tolkien
+              2
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       107
+The Lord of the Rings
+J.R.R. Tolkien
+              1
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       108
+The Da Vinci Code
+Dan Brown
+              4
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       109
+Harry Potter and the Sorcerer's Stone
+J.K. Rowling
+              3
+
+
+    BOOKID
+----------
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+AVAILABLECOPIES
+---------------
+       110
+The Shining
+Stephen King
+              4
+
+
+10 rows selected.
+
+SQL> select* from member;
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        22 Olivia
+Taylor
+olivia.t@email.com
+111-222-3334
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        23 Daniel
+Wilson
+daniel.w@email.com
+444-555-6667
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        24 Sophie
+Brown
+sophie.b@email.com
+777-888-9998
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        25 Matthew
+Martinez
+matthew.m@email.com
+333-666-9997
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        26 Grace
+Jones
+grace.j@email.com
+111-555-9998
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        27 Logan
+Hill
+logan.h@email.com
+222-333-4445
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        28 Ava
+Morgan
+ava.m@email.com
+888-777-6667
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        29 William
+Harrison
+william.h@email.com
+999-888-7779
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        30 Zoe
+Baker
+zoe.b@email.com
+555-444-3335
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        31 Ethan
+Fisher
+ethan.f@email.com
+666-444-2223
+
+
+10 rows selected.
+
+SQL> select* from member where lastname like 'm%';
+
+no rows selected
+
+SQL> select* from member where firstname like 'F%';
+
+no rows selected
+
+SQL> select* from member where CUSTOMERID>20;
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        22 Olivia
+Taylor
+olivia.t@email.com
+111-222-3334
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        23 Daniel
+Wilson
+daniel.w@email.com
+444-555-6667
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        24 Sophie
+Brown
+sophie.b@email.com
+777-888-9998
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        25 Matthew
+Martinez
+matthew.m@email.com
+333-666-9997
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        26 Grace
+Jones
+grace.j@email.com
+111-555-9998
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        27 Logan
+Hill
+logan.h@email.com
+222-333-4445
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        28 Ava
+Morgan
+ava.m@email.com
+888-777-6667
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        29 William
+Harrison
+william.h@email.com
+999-888-7779
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        30 Zoe
+Baker
+zoe.b@email.com
+555-444-3335
+
+
+CUSTOMERID FIRSTNAME
+---------- --------------------------------------------------
+LASTNAME
+--------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+PHONE
+---------------
+        31 Ethan
+Fisher
+ethan.f@email.com
+666-444-2223
+
+
+10 rows selected.
+
+SQL> select Title,Author from Books where AvailableCopies IN(1,5);
+
+TITLE
+--------------------------------------------------------------------------------
+AUTHOR
+--------------------------------------------------------------------------------
+1984
+George Orwell
+
+The Lord of the Rings
+J.R.R. Tolkien
